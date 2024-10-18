@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编程学习方向选择</title>
+    <link rel="stylesheet" href="../java宣传/css/styles.css">
+</head>
+<style>
+    .star {
+        cursor: pointer;
+        font-size: 1.2em;
+        color: #ccc;
+        transition: color 0.3s ease;
+    }
+    .star:hover {
+        color: gold;
+    }
+    .interest-count {
+        font-size: 0.8em;
+        color: #666;
+        margin-left: 5px;
+    }
+</style>
+<body>
+    <div id="app">
+        <header>
+            <h1>探索你的java之路</h1>
+        </header>
+        <main>
+            <p class="intro">选择适合你的学习方向，<br> 开启精彩的编程之旅：</p>
+            <div class="direction-cards">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="项目开发">
+                    <h2>项目方向&nbsp;&nbsp;<span style="color: rgb(152, 149, 149);font-size: 19px;">感兴趣:</span> <span class="star" data-direction="project">☆</span> <span class="interest-count" id="project-count">0</span></h2>
+                    <p>学习如何构建实际应用和解决现实问题方向的讨论</p>
+                    <a href="../java宣传/html/project.html" class="button">探索项目开发</a>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="算法学习">
+                    <h2>算法方向&nbsp;&nbsp;<span style="color: rgb(152, 149, 149);font-size: 19px;">感兴趣:</span> <span class="star" data-direction="algorithm">☆</span> <span class="interest-count" id="algorithm-count">0</span></h2>
+                    <p>深入研究计算机科学的核心概念和问题解决技巧方向的讨论</p>
+                    <a href="../java宣传/html/algorilthm.html" class="button">探索算法世界</a>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>选择你感兴趣的方向，开始你的编程冒险！</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            const directions = ['project', 'algorithm'];
+            let starCounts = JSON.parse(localStorage.getItem('starCounts')) || directions.map(() => 0);
+
+            // 更新星星数量显示
+            function updateStarCounts() {
+                directions.forEach((direction, index) => {
+                    document.getElementById(`${direction}-count`).textContent = starCounts[index];
+                });
+            }
+
+            stars.forEach((star, index) => {
+                star.addEventListener('click', function() {
+                    starCounts[index]++;
+                    this.textContent = '★';
+                    this.style.color = 'gold';
+                    localStorage.setItem('starCounts', JSON.stringify(starCounts));
+                    updateStarCounts();
+                });
+            });
+
+            // 页面加载时更新星星数量
+            updateStarCounts();
+
+            // 根据存储的数据设置星星状态
+            starCounts.forEach((count, index) => {
+                if (count > 0) {
+                    stars[index].textContent = '★';
+                    stars[index].style.color = 'gold';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
